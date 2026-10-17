@@ -1,49 +1,37 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
-# 1. Dataset: Frequently Asked Questions & Answers
-faqs = {
-    "What is CodeAlpha?": "CodeAlpha is an internship platform that provides hands-on project tasks for tech students.",
-    "How do I submit my task?": "You can submit your task by uploading your project code to GitHub and submitting the public repository URL.",
-    "What is your refund policy?": "You can request a full refund within 30 days of purchase.",
-    "How can I reset my password?": "Click on 'Forgot Password' on the login page and follow the email instructions.",
-    "What are support hours?": "Our support team is available 24/7 via email and live chat.",
-    "How do I track my order?": "You can track your order using the tracking link sent to your email.",
-    "Hello": "Hello! Welcome to the FAQ Chatbot. How can I help you today?",
-    "Bye": "Goodbye! Have a great day ahead!"
-}
+# Task 2: FAQ Chatbot
 
-questions = list(faqs.keys())
-answers = list(faqs.values())
+print("Welcome to FAQ Chatbot!")
+print("You can ask questions about courses, registration, and certificates.")
+print("Type 'exit' to stop the chatbot.")
 
-# 2. Vectorize text using TF-IDF
-vectorizer = TfidfVectorizer()
-question_vectors = vectorizer.fit_transform(questions)
+while True:
+    question = input("\nYou: ").lower().strip()
 
-def get_response(user_query):
-    user_vector = vectorizer.transform([user_query])
-    similarities = cosine_similarity(user_vector, question_vectors)
-    
-    best_match_idx = similarities.argmax()
-    best_score = similarities[0, best_match_idx]
-    
-    if best_score < 0.2:
-        return "I'm sorry, I couldn't find an answer to that question. Please rephrase."
-    
-    return answers[best_match_idx]
+    if question == "exit":
+        print("Bot: Thank you for using FAQ Chatbot!")
+        break
 
-# 3. Interactive Terminal Loop
-if __name__ == "__main__":
-    print("========================================")
-    print("      CodeAlpha FAQ Chatbot Active      ")
-    print("   (Type 'exit' or 'quit' to stop)      ")
-    print("========================================")
-    
-    while True:
-        user_input = input("\nYou: ")
-        if user_input.lower() in ['exit', 'quit', 'bye']:
-            print("Chatbot: Goodbye!")
-            break
-            
-        reply = get_response(user_input)
-        print(f"Chatbot: {reply}")
+    elif "hello" in question or "hi" in question:
+        print("Bot: Hello! How can I help you?")
+
+    elif "course" in question:
+        print("Bot: You can find course details on the official website.")
+
+    elif "register" in question:
+        print("Bot: Visit the registration page and fill out the form.")
+
+    elif "certificate" in question:
+        print("Bot: Complete your course requirements to get your certificate.")
+
+    elif "password" in question:
+        print("Bot: Click on Forgot Password on the login page.")
+
+    elif "fee" in question:
+        print("Bot: Please check the official website for course fees.")
+
+    elif "support" in question or "help" in question:
+        print("Bot: Please contact the support team.")
+
+    else:
+        print("Bot: Sorry, I don't know the answer to this question.")
